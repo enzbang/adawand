@@ -1,0 +1,13 @@
+with "magickwand";
+
+project Magickwand_Test is
+
+   for Main use ("test.adb");
+   for Source_Dirs use ("test/src");
+   for Object_Dir use "test/obj";
+
+   package Linker is
+      for Default_Switches ("Ada") use ("-L/usr/lib", "-lMagickCore");
+   end Linker;
+
+end Magickwand_Test;

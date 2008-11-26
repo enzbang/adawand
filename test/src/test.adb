@@ -1,38 +1,32 @@
-with Interfaces.C.Extensions;
+
 with MagickWand;
-with MagickWand.Image; use MagickWand.Image;
 with Ada.Text_IO; use Ada;
 
-with Interfaces.C.Strings;
+procedure Test is
+   use type MagickWand.Size;
 
-procedure Exampl is
-   use Interfaces.C;
-   use Interfaces.C.Strings;
-   use MagickWand;
-   Wand : Magick_Wand;
-   Half_Width  : Image.Size;
-   Half_Height : Image.Size;
+   Image : MagickWand.Object;
+   Half_Width  : MagickWand.Size;
+   Half_Height : MagickWand.Size;
 begin
-   MagickWandGenesis;
-   Wand := NewMagickWand;
-   if Image.MagickReadImage
-     (Wand, New_Char_Array ("adapowered.jpg")) = MagickTrue
-   then
-      Half_Width  := MagickGetImageWidth (Wand) / 2;
-      Half_Height := MagickGetImageHeight (Wand) / 2;
+   MagickWand.Genesis;
+   Image.Read ("adapowered.jpg");
 
-      if MagickResizeImage
-        (Wand, Half_Width, Half_Height, LanczosFilter, 1.0) = MagickTrue
-        and then Image.MagickSetImageCompressionQuality
-          (Wand, 100) = MagickTrue
-        and then MagickWriteImage
-          (Wand,
-           Interfaces.C.Strings.New_Char_Array ("res.jpg")) = MagickTrue
-      then
-         Ada.Text_IO.Put_Line ("ok. res.jpg has been created");
-      end if;
-   end if;
 
-   Wand := DestroyMagickWand (Wand);
-   MagickWandTerminus;
-end Exampl;
+   Half_Width  := Image.Get_Width / 2;
+   Half_Height := Image.Get_Height / 2;
+
+   Image.Set_Filename ("res.jpg");
+
+   Image.Resize (Half_Width, Half_Height, Magickwand.LanczosFilter, 1.0);
+
+   Image.Set_Compression_Quality (100.0);
+
+   Image.Write (Image.Get_Filename);
+
+   --  Ok. Image should be created.
+   Ada.Text_IO.Put_Line ("ok. res.jpg has been created");
+
+   MagickWand.Terminus;
+
+end Test;

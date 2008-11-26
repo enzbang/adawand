@@ -10,4 +10,8 @@ project Magickwand_Test is
       for Default_Switches ("Ada") use ("-L/usr/lib", "-lMagickCore");
    end Linker;
 
+   package Builder is
+      for Default_Switches ("Ada") use ("-gnat05");
+   end Builder;
+
 end Magickwand_Test;

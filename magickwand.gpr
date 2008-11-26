@@ -7,5 +7,9 @@ project Magickwand is
    for Library_Name use "ada_magick_wand";
    for Library_Kind use "dynamic";
 
+   package Builder is
+      for Default_Switches ("Ada") use ("-gnat05");
+   end Builder;
+
 end Magickwand;
 

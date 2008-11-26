@@ -1,0 +1,10 @@
+project Magickwand is
+
+   for Source_Dirs use ("../../include/magickwand");
+   for Library_Dir use "../../lib/magickwand";
+   for Library_Name use "ada_magick_wand";
+   for Library_Kind use "dynamic";
+   for Externally_Built use "true";
+
+end Magickwand;
+
